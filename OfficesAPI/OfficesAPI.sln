@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficesAPI.Domain", "OfficesAPI.Domain\OfficesAPI.Domain.csproj", "{D34B5218-3F1F-4E8F-816C-4C035AF072A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficesAPI.DAL", "OfficesAPI.DAL\OfficesAPI.DAL.csproj", "{B00E9159-054A-42EF-A71F-21F7E123D878}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D34B5218-3F1F-4E8F-816C-4C035AF072A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34B5218-3F1F-4E8F-816C-4C035AF072A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34B5218-3F1F-4E8F-816C-4C035AF072A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34B5218-3F1F-4E8F-816C-4C035AF072A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B00E9159-054A-42EF-A71F-21F7E123D878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00E9159-054A-42EF-A71F-21F7E123D878}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00E9159-054A-42EF-A71F-21F7E123D878}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00E9159-054A-42EF-A71F-21F7E123D878}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
