@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OfficesAPI.Application.Interfaces;
 using System.Linq.Expressions;
 
 namespace OfficesAPI.DAL.Abstracts
 {
-    public abstract class RepositoryBase<T>
+    public abstract class RepositoryBase<T> : IRepository<T>
        where T : class
     {
         protected OfficesContext Context;

@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OfficesAPI.Application.Interfaces;
 using OfficesAPI.DAL.Abstracts;
 using OfficesAPI.Domain;
 
 namespace OfficesAPI.DAL.Repositories
 {
-    public class OfficeRepository : RepositoryBase<Office>
+    public class OfficeRepository : RepositoryBase<Office>, IOfficeRepository
     {
         public OfficeRepository(OfficesContext context) : base(context)
         {
