@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OfficesAPI.Application.Models
+namespace OfficesAPI.Services.Models
 {
     public class OfficeAddressDTO
     {

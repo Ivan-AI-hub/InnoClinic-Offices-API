@@ -8,13 +8,11 @@ namespace OfficesAPI.Application.Commands.Offices.Create
     internal class CreateOfficeHandler : IRequestHandler<CreateOffice, ApplicationValueResult<Office>>
     {
         private IRepositoryManager _repositoryManager;
-        private IBlobManager _blobManager;
         private IValidator<CreateOffice> _validator;
-        public CreateOfficeHandler(IRepositoryManager repositoryManager, IValidator<CreateOffice> validator, IBlobManager blobManager)
+        public CreateOfficeHandler(IRepositoryManager repositoryManager, IValidator<CreateOffice> validator)
         {
             _repositoryManager = repositoryManager;
             _validator = validator;
-            _blobManager = blobManager;
         }
 
         public async Task<ApplicationValueResult<Office>> Handle(CreateOffice request, CancellationToken cancellationToken)
@@ -31,11 +29,13 @@ namespace OfficesAPI.Application.Commands.Offices.Create
             if(isOfficeNumberInvalid)
                 return new ApplicationValueResult<Office>(null, $"There is already an office at {request.OfficeNumber} in {request.City}");
 
-            await _blobManager.UploadAsync(request.Photo, cancellationToken);
 
             var address = new OfficeAddress(request.City, request.Street, request.HouseNumber);
-            var picture = new Picture(request.Photo.FileName);
+
+            var picture = request.PhotoFileName != null? new Picture(request.PhotoFileName): null;
+
             var office = new Office(address, request.OfficeNumber, request.PhoneNumber, request.Status, picture);
+
             _repositoryManager.OfficeRepository.Create(office);
             await _repositoryManager.SaveChangesAsync(cancellationToken);
             return new ApplicationValueResult<Office>(office);

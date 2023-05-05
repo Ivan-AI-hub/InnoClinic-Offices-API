@@ -1,4 +1,4 @@
-﻿namespace OfficesAPI.Application.Models
+﻿namespace OfficesAPI.Services.Models
 {
     public class OfficeDTO
     {

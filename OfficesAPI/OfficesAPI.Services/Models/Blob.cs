@@ -1,4 +1,4 @@
-﻿namespace OfficesAPI.Application.Models
+﻿namespace OfficesAPI.Services.Models
 {
     public record Blob(string FileName, string ContentType, Stream Content);
 }

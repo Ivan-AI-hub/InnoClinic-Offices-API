@@ -1,16 +1,15 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using OfficesAPI.Application.Interfaces;
-using OfficesAPI.Application.Models;
-using OfficesAPI.Application.Settings;
+using OfficesAPI.Services.Models;
+using OfficesAPI.Services.Settings;
 
-namespace OfficesAPI.Application
+namespace OfficesAPI.Services
 {
-    public class BlobManager : IBlobManager
+    public class BlobService
     {
         private BlobStorageSettings _blobStorageSettings;
-        public BlobManager(IOptions<BlobStorageSettings> blobStorageSettings)
+        public BlobService(IOptions<BlobStorageSettings> blobStorageSettings)
         {
             _blobStorageSettings = blobStorageSettings.Value;
             BlobContainerClient container = new BlobContainerClient(_blobStorageSettings.ConnectionString, _blobStorageSettings.ImagesContainerName);

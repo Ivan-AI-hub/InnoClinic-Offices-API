@@ -2,7 +2,8 @@
 
 namespace OfficesAPI.Application
 {
-    public class ApplicationValueResult<T> where T : class
+    public class ApplicationValueResult<T> : IApplicationResult
+        where T : class
     {
         public IList<string> Errors { get; }
         public T? Value { get; internal set; }

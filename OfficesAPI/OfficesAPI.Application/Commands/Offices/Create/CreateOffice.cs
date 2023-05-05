@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using OfficesAPI.Domain;
 
 namespace OfficesAPI.Application.Commands.Offices.Create
 {
-   public record CreateOffice(IFormFile Photo,
+   public record CreateOffice(string? PhotoFileName,
                               string City,
                               string Street,
                               int HouseNumber,
