@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using OfficesAPI.Application.Interfaces;
 using OfficesAPI.Domain;
 using System.Linq.Expressions;
@@ -10,7 +10,7 @@ namespace OfficesAPI.DAL.Repositories
     public class OfficeRepository : IOfficeRepository
     {
         private IMongoCollection<Office> _officeCollection;
-        public OfficeRepository(IOptions<OfficesDataBaseSettings> databaseSettings)
+        public OfficeRepository(IOptions<OfficesDatabaseSettings> databaseSettings)
         {
             var settings = databaseSettings.Value;
             var client = new MongoClient(settings.ConnectionString);

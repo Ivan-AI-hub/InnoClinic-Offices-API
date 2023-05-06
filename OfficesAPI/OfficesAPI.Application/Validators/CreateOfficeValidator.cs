@@ -5,7 +5,7 @@ namespace OfficesAPI.Application.Validators
 {
     public class CreateOfficeValidator : AbstractValidator<CreateOffice>
     {
-        private const string _phoneRegex = "/^(\\+\\d{1,3}[- ]?)?\\d{10}$/";
+        private const string _phoneRegex = "^(\\+)?((\\d{2,3}) ?\\d|\\d)(([ -]?\\d)|( ?(\\d{2,3}) ?)){5,12}\\d$";
         public CreateOfficeValidator()
         {
             RuleFor(x => x.City).NotEmpty().NotNull();

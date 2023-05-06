@@ -1,15 +1,26 @@
+using FluentValidation;
+using OfficesAPI.Application.Commands.Offices.Create;
+using OfficesAPI.DAL;
+using OfficesAPI.Services.Settings;
+using OfficesAPI.Web.Extentions;
+using Microsoft.Extensions.Azure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.ConfigureRepositories();
+builder.Services.ConfigureServices();
+builder.Services.ConfigureSwagger();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateOffice).Assembly));
+builder.Services.AddValidatorsFromAssemblyContaining<CreateOffice>();
 
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.Configure<BlobStorageSettings>(builder.Configuration.GetSection("BlobStorageConfig"));
+builder.Services.Configure<OfficesDatabaseSettings>(builder.Configuration.GetSection("OfficesDatabaseConfig"));
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
