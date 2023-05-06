@@ -7,11 +7,11 @@ namespace OfficesAPI.Application.Commands.Offices.Create
 {
     internal class CreateOfficeHandler : IRequestHandler<CreateOffice, ApplicationValueResult<Office>>
     {
-        private IRepositoryManager _repositoryManager;
+        private IOfficeRepository _officeRepository;
         private IValidator<CreateOffice> _validator;
-        public CreateOfficeHandler(IRepositoryManager repositoryManager, IValidator<CreateOffice> validator)
+        public CreateOfficeHandler(IOfficeRepository officeRepository, IValidator<CreateOffice> validator)
         {
-            _repositoryManager = repositoryManager;
+            _officeRepository = officeRepository;
             _validator = validator;
         }
 
@@ -21,14 +21,11 @@ namespace OfficesAPI.Application.Commands.Offices.Create
             if (!validationResult.IsValid)
                 return new ApplicationValueResult<Office>(validationResult);
 
-
-            var isOfficeNumberInvalid = await _repositoryManager.OfficeRepository
-                                                              .IsItemExistAsync(x => x.Address.City == request.City &&
+            var isOfficeNumberInvalid = await _officeRepository.IsItemExistAsync(x => x.Address.City == request.City &&
                                                                                      x.OfficeNumber == request.OfficeNumber);
 
             if(isOfficeNumberInvalid)
                 return new ApplicationValueResult<Office>(null, $"There is already an office at {request.OfficeNumber} in {request.City}");
-
 
             var address = new OfficeAddress(request.City, request.Street, request.HouseNumber);
 
@@ -36,8 +33,7 @@ namespace OfficesAPI.Application.Commands.Offices.Create
 
             var office = new Office(address, request.OfficeNumber, request.PhoneNumber, request.Status, picture);
 
-            _repositoryManager.OfficeRepository.Create(office);
-            await _repositoryManager.SaveChangesAsync(cancellationToken);
+            await _officeRepository.CreateAsync(office);
             return new ApplicationValueResult<Office>(office);
         }
     }
