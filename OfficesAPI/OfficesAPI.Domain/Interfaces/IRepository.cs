@@ -4,7 +4,7 @@ namespace OfficesAPI.Domain.Interfaces
 {
     public interface IRepository<T>
     {
-        Task<T> GetItemAsync(Guid id);
+        Task<T> GetItemAsync(Guid id, CancellationToken cancellationToken = default);
 
         /// <param name="predicate">Special predicate for element search</param>
         /// <returns>The element, if it was found in the database or null</returns>

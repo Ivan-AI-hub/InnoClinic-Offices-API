@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using OfficesAPI.Application.Commands.Offices.Create;
+using OfficesAPI.Application.Queries.Offices.GetItem;
 using OfficesAPI.Application.Queries.Offices.GetPage;
 using OfficesAPI.Services.Models;
 
@@ -33,10 +34,23 @@ namespace OfficesAPI.Services
             return new ServiceVoidResult(result);
         }
 
-        public async Task<IEnumerable<OfficeDTO>> GetOfficesAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<OfficeDTO>> GetOfficesPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
             var offices = await _mediator.Send(new GetOfficesPage(pageNumber, pageSize), cancellationToken);
             return _mapper.Map<IEnumerable<OfficeDTO>>(offices);
+        }
+
+        public async Task<OfficeDTO> GetOfficeAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            var officeData = await _mediator.Send(new GetOffice(id), cancellationToken);
+            var office = _mapper.Map<OfficeDTO>(officeData);
+
+            if(officeData.Photo != null)
+            {
+                office.Photo = await _blobService.DownloadAsync(officeData.Photo.Name, cancellationToken);
+            }
+
+            return office;
         }
     }
 }
