@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using OfficesAPI.Application.Results;
 using OfficesAPI.Domain.Interfaces;
 
 namespace OfficesAPI.Application.Commands.Offices.UpdateStatus

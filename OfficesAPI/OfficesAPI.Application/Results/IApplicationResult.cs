@@ -1,4 +1,4 @@
-﻿namespace OfficesAPI.Application
+﻿namespace OfficesAPI.Application.Results
 {
     public interface IApplicationResult
     {

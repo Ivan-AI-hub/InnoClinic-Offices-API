@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OfficesAPI.Application.Commands.Offices.Create;
+using OfficesAPI.Application.Commands.Offices.Update;
 using OfficesAPI.Domain;
 using OfficesAPI.Services.Models;
 
@@ -15,6 +16,9 @@ namespace OfficesAPI.Services.Mappings
 
             CreateMap<OfficeAddress, OfficeAddressDTO>().ReverseMap();
             CreateMap<CreateOfficeModel, CreateOffice>()
+                .ForMember(s => s.PhotoFileName, r => r.MapFrom(d => d.Photo.Name));
+
+            CreateMap<UpdateOfficeModel, UpdateOffice>()
                 .ForMember(s => s.PhotoFileName, r => r.MapFrom(d => d.Photo.Name));
         }
     }

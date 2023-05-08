@@ -26,6 +26,17 @@ namespace OfficesAPI.Web.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateOffice(Guid id, [FromForm] UpdateOfficeModel model, CancellationToken cancellationToken = default)
+        {
+            var result = await _officeService.UpdateAsync(id, model, cancellationToken);
+            if (!result.IsComplite)
+            {
+                return BadRequest(new ErrorDetails(400, result.Errors));
+            }
+            return Ok();
+        }
+
         [HttpPut("{id}/status")]
         public async Task<IActionResult> PutStatus(Guid id, bool newStatus, CancellationToken cancellationToken = default)
         {

@@ -45,5 +45,12 @@ namespace OfficesAPI.Services
 
             return new Blob(blobFileName, contentType, content.Value.Content.ToArray());
         }
+
+        public async Task DeleteAsync(string blobFileName, CancellationToken cancellationToken = default)
+        {
+            BlobContainerClient container = new BlobContainerClient(_blobStorageSettings.ConnectionString, _blobStorageSettings.ImagesContainerName);
+
+            await container.DeleteBlobAsync(blobFileName, cancellationToken: cancellationToken);
+        }
     }
 }

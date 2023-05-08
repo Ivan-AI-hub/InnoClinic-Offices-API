@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using OfficesAPI.Application.Results;
 using OfficesAPI.Domain;
 using OfficesAPI.Domain.Interfaces;
 
@@ -22,7 +23,7 @@ namespace OfficesAPI.Application.Commands.Offices.Create
                 return new ApplicationValueResult<Office>(validationResult);
 
             var isOfficeNumberInvalid = await _officeRepository.IsItemExistAsync(x => x.Address.City == request.City &&
-                                                                                     x.OfficeNumber == request.OfficeNumber);
+                                                                                     x.OfficeNumber == request.OfficeNumber, cancellationToken);
 
             if(isOfficeNumberInvalid)
                 return new ApplicationValueResult<Office>(null, $"There is already an office at {request.OfficeNumber} in {request.City}");

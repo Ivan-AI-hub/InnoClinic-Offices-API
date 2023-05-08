@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace OfficesAPI.Application
+namespace OfficesAPI.Application.Results
 {
     public class ApplicationVoidResult : IApplicationResult
     {

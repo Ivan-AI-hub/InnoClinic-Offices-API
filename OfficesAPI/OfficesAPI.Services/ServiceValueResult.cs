@@ -1,4 +1,4 @@
-﻿using OfficesAPI.Application;
+﻿using OfficesAPI.Application.Results;
 
 namespace OfficesAPI.Services
 {

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using OfficesAPI.Application.Commands.Offices.Create;
+using OfficesAPI.Application.Commands.Offices.Update;
 using OfficesAPI.Application.Commands.Offices.UpdateStatus;
 using OfficesAPI.Application.Queries.Offices.GetItem;
 using OfficesAPI.Application.Queries.Offices.GetPage;
@@ -28,6 +29,27 @@ namespace OfficesAPI.Services
             var result = await _mediator.Send(request, cancellationToken);
 
             if(result.IsComplite && model.Photo != null)
+            {
+                await _blobService.UploadAsync(model.Photo, cancellationToken);
+            }
+
+            return new ServiceVoidResult(result);
+        }
+        public async Task<ServiceVoidResult> UpdateAsync(Guid id, UpdateOfficeModel model, CancellationToken cancellationToken = default)
+        {
+            var request = _mapper.Map<UpdateOffice>(model);
+            request.Id = id;
+
+            var result = await _mediator.Send(request, cancellationToken);
+            if(!result.IsComplite)
+                return new ServiceVoidResult(result);
+
+            if(result.OldValue.Photo != null)
+            {
+                await _blobService.DeleteAsync(result.OldValue.Photo.Name, cancellationToken);
+            }
+
+            if (model.Photo != null)
             {
                 await _blobService.UploadAsync(model.Photo, cancellationToken);
             }
