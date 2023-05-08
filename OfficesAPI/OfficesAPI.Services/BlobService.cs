@@ -40,6 +40,7 @@ namespace OfficesAPI.Services
                 return null;
             }
 
+            //Пофиксить 
             var data = await file.OpenReadAsync(cancellationToken: cancellationToken);
             var content = await file.DownloadContentAsync(cancellationToken);
             string contentType = content.Value.Details.ContentType;

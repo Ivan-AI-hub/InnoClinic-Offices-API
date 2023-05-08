@@ -1,6 +1,6 @@
 ﻿using OfficesAPI.Domain;
 
-namespace OfficesAPI.Application.Interfaces
+namespace OfficesAPI.Domain.Interfaces
 {
     public interface IOfficeRepository : IRepository<Office>
     {

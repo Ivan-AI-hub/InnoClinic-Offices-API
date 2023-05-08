@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using OfficesAPI.Application.Interfaces;
 using OfficesAPI.Domain;
+using OfficesAPI.Domain.Interfaces;
 using System.Linq.Expressions;
 
 namespace OfficesAPI.DAL.Repositories

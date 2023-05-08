@@ -6,7 +6,7 @@ using OfficesAPI.Web.Models.ErrorModels;
 namespace OfficesAPI.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("offices")]
     public class OfficeController : ControllerBase
     {
         private OfficeService _officeService;
@@ -16,7 +16,7 @@ namespace OfficesAPI.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateOfficeModel model)
+        public async Task<IActionResult> Post([FromForm] CreateOfficeModel model)
         {
             var result = await _officeService.Create(model);
             if(!result.IsComplite)

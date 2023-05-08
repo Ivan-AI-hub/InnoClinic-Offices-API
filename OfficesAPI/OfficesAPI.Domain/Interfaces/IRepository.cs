@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace OfficesAPI.Application.Interfaces
+namespace OfficesAPI.Domain.Interfaces
 {
     public interface IRepository<T>
     {

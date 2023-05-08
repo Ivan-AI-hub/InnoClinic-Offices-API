@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
-using OfficesAPI.Application.Interfaces;
 using OfficesAPI.Domain;
+using OfficesAPI.Domain.Interfaces;
 
 namespace OfficesAPI.Application.Commands.Offices.Create
 {
