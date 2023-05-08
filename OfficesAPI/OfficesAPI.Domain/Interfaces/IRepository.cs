@@ -4,10 +4,13 @@ namespace OfficesAPI.Domain.Interfaces
 {
     public interface IRepository<T>
     {
-        Task<T> GetItemAsync(Guid id, CancellationToken cancellationToken = default);
+
+        /// <param name="id">item's id</param>
+        /// <returns>Item if it wes found or null if not</returns>
+        Task<T?> GetItemAsync(Guid id, CancellationToken cancellationToken = default);
 
         /// <param name="predicate">Special predicate for element search</param>
-        /// <returns>The element, if it was found in the database or null</returns>
+        /// <returns>IQueryable collection</returns>
         public IQueryable<T> GetItemsByCondition(Expression<Func<T, bool>> predicate);
 
         /// <returns>queryable items from the database</returns>

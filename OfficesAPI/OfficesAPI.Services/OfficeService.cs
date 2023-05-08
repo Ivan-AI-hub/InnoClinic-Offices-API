@@ -24,6 +24,10 @@ namespace OfficesAPI.Services
             _blobService = blobService;
         }
 
+        /// <summary>
+        /// Creates the office in the system
+        /// </summary>
+        /// <param name="model">Model for creating office</param>
         public async Task<ServiceValueResult<OfficeDTO>> CreateAsync(CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
             if (model.Photo != null)
@@ -48,6 +52,12 @@ namespace OfficesAPI.Services
             var office = await GetOfficeDTOWithPhotoAsync(applicationResult.Value);
             return new ServiceValueResult<OfficeDTO>(office);
         }
+
+        /// <summary>
+        /// Updates office with a specific id in database
+        /// </summary>
+        /// <param name="id">Office id</param>
+        /// <param name="model">Model for updating office</param>
         public async Task<ServiceVoidResult> UpdateAsync(Guid id, UpdateOfficeModel model, CancellationToken cancellationToken = default)
         {
             if (model.Photo != null)
@@ -76,18 +86,29 @@ namespace OfficesAPI.Services
 
             return new ServiceVoidResult(applicationResult);
         }
+
+        /// <summary>
+        /// Updates status for office with a specific id
+        /// </summary>
+        /// <param name="id">Office id</param>
+        /// <param name="newStatus">new status</param>
         public async Task<ServiceVoidResult> UpdateStatus(Guid id, bool newStatus, CancellationToken cancellationToken = default)
         {
             var applicationResult = await _mediator.Send(new UpdateOfficeStatus(id, newStatus), cancellationToken);
             return new ServiceVoidResult(applicationResult);
         }
 
+        /// <param name="pageNumber">number of page</param>
+        /// <param name="pageSize">size of page</param>
+        /// <returns>Information about offices</returns>
         public async Task<IEnumerable<OfficeDTO>> GetOfficesPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
             var offices = await _mediator.Send(new GetOfficesPage(pageNumber, pageSize), cancellationToken);
             return _mapper.Map<IEnumerable<OfficeDTO>>(offices);
         }
 
+        /// <param name="id">Office id</param>
+        /// <returns>info about an office with a specific id</returns>
         public async Task<OfficeDTO> GetOfficeAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var officeData = await _mediator.Send(new GetOffice(id), cancellationToken);
@@ -105,7 +126,6 @@ namespace OfficesAPI.Services
 
             return office;
         }
-
 
         private async Task<IServiceResult> IsBlobFileNameValid(string blobFileName)
         {
