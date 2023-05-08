@@ -1,8 +1,9 @@
 ﻿using OfficesAPI.Application.Results;
 
-namespace OfficesAPI.Services
+namespace OfficesAPI.Services.Results
 {
-    public class ServiceValueResult<T> where T : class
+    public class ServiceValueResult<T> : IServiceResult
+        where T : class
     {
         public IList<string> Errors { get; }
         public T? Value { get; internal set; }
@@ -14,6 +15,14 @@ namespace OfficesAPI.Services
             Errors = errors.ToList();
         }
 
+        public ServiceValueResult(IApplicationResult applicationResult)
+        {
+            Errors = applicationResult.Errors;
+        }
+        public ServiceValueResult(IServiceResult serviceResult)
+        {
+            Errors = serviceResult.Errors;
+        }
         public ServiceValueResult(ApplicationValueResult<T> applicationResult)
         {
             Value = applicationResult.Value;

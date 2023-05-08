@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using OfficesAPI.DAL.Repositories;
-using OfficesAPI.Services;
 using OfficesAPI.Domain.Interfaces;
+using OfficesAPI.Services;
 
 namespace OfficesAPI.Web.Extentions
 {

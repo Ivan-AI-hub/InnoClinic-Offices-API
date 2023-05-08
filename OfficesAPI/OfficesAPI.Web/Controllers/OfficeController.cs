@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using OfficesAPI.Services;
 using OfficesAPI.Services.Models;
@@ -16,14 +17,14 @@ namespace OfficesAPI.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromForm] CreateOfficeModel model, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> CreateOffice([FromForm] CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
             var result = await _officeService.CreateAsync(model, cancellationToken);
             if (!result.IsComplite)
             {
                 return BadRequest(new ErrorDetails(400, result.Errors));
             }
-            return Ok();
+            return Created(Request.GetDisplayUrl() + $"/{result.Value.Id}", result.Value);
         }
 
         [HttpPut("{id}")]
@@ -38,7 +39,7 @@ namespace OfficesAPI.Web.Controllers
         }
 
         [HttpPut("{id}/status")]
-        public async Task<IActionResult> PutStatus(Guid id, bool newStatus, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateOfficeStatus(Guid id, bool newStatus, CancellationToken cancellationToken = default)
         {
             var result = await _officeService.UpdateStatus(id, newStatus, cancellationToken);
             if (!result.IsComplite)
@@ -51,14 +52,14 @@ namespace OfficesAPI.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOffices(int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default)
         {
-            var offices = await _officeService.GetOfficesPageAsync(pageNumber, pageSize);
+            var offices = await _officeService.GetOfficesPageAsync(pageNumber, pageSize, cancellationToken);
             return new JsonResult(offices);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOffice(Guid id, CancellationToken cancellationToken = default)
         {
-            var office = await _officeService.GetOfficeAsync(id);
+            var office = await _officeService.GetOfficeAsync(id, cancellationToken);
             return new JsonResult(office);
         }
     }

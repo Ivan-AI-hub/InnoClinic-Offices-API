@@ -1,11 +1,6 @@
 ﻿using MediatR;
 using OfficesAPI.Domain;
 using OfficesAPI.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OfficesAPI.Application.Queries.Offices.GetItem
 {

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using OfficesAPI.Application.Results;
 using OfficesAPI.Domain;
@@ -10,10 +11,12 @@ namespace OfficesAPI.Application.Commands.Offices.Create
     {
         private IOfficeRepository _officeRepository;
         private IValidator<CreateOffice> _validator;
-        public CreateOfficeHandler(IOfficeRepository officeRepository, IValidator<CreateOffice> validator)
+        private IMapper _mapper;
+        public CreateOfficeHandler(IOfficeRepository officeRepository, IMapper mapper, IValidator<CreateOffice> validator)
         {
             _officeRepository = officeRepository;
             _validator = validator;
+            _mapper = mapper;
         }
 
         public async Task<ApplicationValueResult<Office>> Handle(CreateOffice request, CancellationToken cancellationToken)
@@ -22,17 +25,7 @@ namespace OfficesAPI.Application.Commands.Offices.Create
             if (!validationResult.IsValid)
                 return new ApplicationValueResult<Office>(validationResult);
 
-            var isOfficeNumberInvalid = await _officeRepository.IsItemExistAsync(x => x.Address.City == request.City &&
-                                                                                     x.OfficeNumber == request.OfficeNumber, cancellationToken);
-
-            if(isOfficeNumberInvalid)
-                return new ApplicationValueResult<Office>(null, $"There is already an office at {request.OfficeNumber} in {request.City}");
-
-            var address = new OfficeAddress(request.City, request.Street, request.HouseNumber);
-
-            var picture = request.PhotoFileName != null? new Picture(request.PhotoFileName): null;
-
-            var office = new Office(address, request.OfficeNumber, request.PhoneNumber, request.Status, picture);
+            var office = _mapper.Map<Office>(request);
 
             await _officeRepository.CreateAsync(office);
             return new ApplicationValueResult<Office>(office);

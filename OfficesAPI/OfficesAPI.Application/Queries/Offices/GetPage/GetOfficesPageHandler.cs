@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using OfficesAPI.Domain;
 using OfficesAPI.Domain.Interfaces;
 
@@ -8,7 +7,7 @@ namespace OfficesAPI.Application.Queries.Offices.GetPage
     internal class GetOfficesPageHandler : IRequestHandler<GetOfficesPage, IEnumerable<Office>>
     {
         private IOfficeRepository _officeRepository;
-        public GetOfficesPageHandler(IOfficeRepository officeRepository) 
+        public GetOfficesPageHandler(IOfficeRepository officeRepository)
         {
             _officeRepository = officeRepository;
         }

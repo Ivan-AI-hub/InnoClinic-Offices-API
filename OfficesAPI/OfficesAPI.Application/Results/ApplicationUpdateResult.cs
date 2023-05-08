@@ -1,14 +1,13 @@
 ﻿using FluentValidation.Results;
-using Newtonsoft.Json.Linq;
 
 namespace OfficesAPI.Application.Results
 {
-    public class ApplicationUpdateResult<T>:IApplicationResult
+    public class ApplicationUpdateResult<T> : IApplicationResult
     {
         public T? OldValue { get; set; }
         public T? NewValue { get; set; }
 
-        public IList<string> Errors {get;}
+        public IList<string> Errors { get; }
 
         public bool IsComplite => Errors.Count == 0;
 
@@ -18,7 +17,7 @@ namespace OfficesAPI.Application.Results
             NewValue = newValue;
         }
 
-        public ApplicationUpdateResult(T? oldValue = default, T? newValue = default, params string[] errors): this(oldValue, newValue)
+        public ApplicationUpdateResult(T? oldValue = default, T? newValue = default, params string[] errors) : this(oldValue, newValue)
         {
             Errors = errors.ToList();
         }

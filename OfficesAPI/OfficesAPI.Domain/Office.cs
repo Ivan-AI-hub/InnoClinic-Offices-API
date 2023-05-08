@@ -19,7 +19,7 @@
             Status = status;
             Photo = photo;
         }
-        public Office(Guid id,OfficeAddress address, int officeNumber, string phoneNumber, bool status, Picture? photo) : 
+        public Office(Guid id, OfficeAddress address, int officeNumber, string phoneNumber, bool status, Picture? photo) :
             this(address, officeNumber, phoneNumber, status, photo)
         {
             Id = id;

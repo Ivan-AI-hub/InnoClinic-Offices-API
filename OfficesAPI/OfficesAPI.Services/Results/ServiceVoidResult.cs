@@ -1,8 +1,8 @@
 ﻿using OfficesAPI.Application.Results;
 
-namespace OfficesAPI.Services
+namespace OfficesAPI.Services.Results
 {
-    public class ServiceVoidResult
+    public class ServiceVoidResult : IServiceResult
     {
         public IList<string> Errors { get; }
         public bool IsComplite => Errors.Count == 0;
@@ -15,6 +15,11 @@ namespace OfficesAPI.Services
         public ServiceVoidResult(IApplicationResult applicationResult)
         {
             Errors = applicationResult.Errors;
+        }
+
+        public ServiceVoidResult(IServiceResult serviceResult)
+        {
+            Errors = serviceResult.Errors;
         }
     }
 }
