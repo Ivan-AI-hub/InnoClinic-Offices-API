@@ -25,5 +25,12 @@ namespace OfficesAPI.Web.Controllers
             }
             return Ok();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetOffices(int pageNumber, int pageSize)
+        {
+            var offices = await _officeService.GetOfficesAsync(pageNumber, pageSize);
+            return new JsonResult(offices);
+        }
     }
 }

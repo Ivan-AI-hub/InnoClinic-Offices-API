@@ -3,7 +3,7 @@ using OfficesAPI.Application.Commands.Offices.Create;
 using OfficesAPI.DAL;
 using OfficesAPI.Services.Settings;
 using OfficesAPI.Web.Extentions;
-using Microsoft.Extensions.Azure;
+using OfficesAPI.Services.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +16,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Creat
 builder.Services.AddValidatorsFromAssemblyContaining<CreateOffice>();
 
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddAutoMapper(typeof(ServicesMappingProfile));
 builder.Services.Configure<BlobStorageSettings>(builder.Configuration.GetSection("BlobStorageConfig"));
 builder.Services.Configure<OfficesDatabaseSettings>(builder.Configuration.GetSection("OfficesDatabaseConfig"));
 var app = builder.Build();
