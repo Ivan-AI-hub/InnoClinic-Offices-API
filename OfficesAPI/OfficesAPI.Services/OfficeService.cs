@@ -109,9 +109,11 @@ namespace OfficesAPI.Services
 
         /// <param name="id">Office id</param>
         /// <returns>info about an office with a specific id</returns>
-        public async Task<OfficeDTO> GetOfficeAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<OfficeDTO?> GetOfficeAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var officeData = await _mediator.Send(new GetOffice(id), cancellationToken);
+            if (officeData == null)
+                return null;
             return await GetOfficeDTOWithPhotoAsync(officeData);
         }
 

@@ -23,7 +23,7 @@ namespace OfficesAPI.Web.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(OfficeDTO),201)]
         [ProducesResponseType(typeof(ErrorDetails),400)]
-        public async Task<IActionResult> CreateOffice(CreateOfficeModel model, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> CreateOffice([FromForm]CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
             var result = await _officeService.CreateAsync(model, cancellationToken);
             if (!result.IsComplite)
@@ -85,9 +85,14 @@ namespace OfficesAPI.Web.Controllers
         /// <returns>info about an office with a specific id</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(OfficeDTO), 200)]
+        [ProducesResponseType(typeof(ErrorDetails), 400)]
         public async Task<IActionResult> GetOffice(Guid id, CancellationToken cancellationToken = default)
         {
             var office = await _officeService.GetOfficeAsync(id, cancellationToken);
+            if (office == null)
+            {
+                return BadRequest(new ErrorDetails(400, $"Office with ID = {id} does not exist"));
+            }
             return new JsonResult(office);
         }
     }
