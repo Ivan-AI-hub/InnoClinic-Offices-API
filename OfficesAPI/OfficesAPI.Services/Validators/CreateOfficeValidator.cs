@@ -1,10 +1,9 @@
 ﻿using FluentValidation;
-using OfficesAPI.Application.Commands.Offices.Create;
-using OfficesAPI.Domain.Interfaces;
+using OfficesAPI.Services.Models;
 
-namespace OfficesAPI.Application.Validators
+namespace OfficesAPI.Services.Validators
 {
-    public class CreateOfficeValidator : AbstractValidator<CreateOffice>
+    public class CreateOfficeValidator : AbstractValidator<CreateOfficeModel>
     {
         private const string _phoneRegex = "^(\\+)?((\\d{2,3}) ?\\d|\\d)(([ -]?\\d)|( ?(\\d{2,3}) ?)){5,12}\\d$";
         public CreateOfficeValidator()

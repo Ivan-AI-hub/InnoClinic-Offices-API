@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OfficesAPI.Application\OfficesAPI.Application.csproj" />
     <ProjectReference Include="..\OfficesAPI.DAL\OfficesAPI.DAL.csproj" />
     <ProjectReference Include="..\OfficesAPI.Services\OfficesAPI.Services.csproj" />
   </ItemGroup>

@@ -21,9 +21,9 @@ namespace OfficesAPI.Web.Controllers
         /// </summary>
         /// <param name="model">Model for creating office</param>
         [HttpPost]
-        [ProducesResponseType(typeof(OfficeDTO),201)]
-        [ProducesResponseType(typeof(ErrorDetails),400)]
-        public async Task<IActionResult> CreateOffice([FromForm]CreateOfficeModel model, CancellationToken cancellationToken = default)
+        [ProducesResponseType(typeof(OfficeDTO), 201)]
+        [ProducesResponseType(typeof(ErrorDetails), 400)]
+        public async Task<IActionResult> CreateOffice([FromForm] CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
             var office = await _officeService.CreateAsync(model, cancellationToken);
             return Created(Request.GetDisplayUrl() + $"/{office.Id}", office);
@@ -62,10 +62,10 @@ namespace OfficesAPI.Web.Controllers
         /// <param name="pageSize">size of page</param>
         /// <returns>Information about offices</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<OfficeDTO>),200)]
-        public async Task<IActionResult> GetOffices(int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default)
+        [ProducesResponseType(typeof(IEnumerable<OfficeDTO>), 200)]
+        public IActionResult GetOffices(int pageNumber = 1, int pageSize = 10)
         {
-            var offices = await _officeService.GetOfficesPageAsync(pageNumber, pageSize, cancellationToken);
+            var offices = _officeService.GetOfficesPage(pageNumber, pageSize);
             return new JsonResult(offices);
         }
 
