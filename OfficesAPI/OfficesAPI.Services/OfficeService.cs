@@ -26,9 +26,9 @@ namespace OfficesAPI.Services
 
         public async Task<OfficeDTO> CreateAsync(CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
-            await IsBlobFileNameValid(model.Photo, cancellationToken);
-            await IsModelValid(model, new CreateOfficeValidator(), cancellationToken);
-            await IsOfficeNumberValid(model.City, model.OfficeNumber, cancellationToken);
+            await ValidateBlobFileName(model.Photo, cancellationToken);
+            await ValidateModel(model, new CreateOfficeValidator(), cancellationToken);
+            await ValidateOfficeNumber(model.City, model.OfficeNumber, cancellationToken);
 
             var office = _mapper.Map<Office>(model);
             await _officeRepository.CreateAsync(office);
@@ -41,8 +41,8 @@ namespace OfficesAPI.Services
 
         public async Task UpdateAsync(Guid id, UpdateOfficeModel model, CancellationToken cancellationToken = default)
         {
-            await IsBlobFileNameValid(model.Photo, cancellationToken);
-            await IsModelValid(model, new UpdateOfficeValidator(), cancellationToken);
+            await ValidateBlobFileName(model.Photo, cancellationToken);
+            await ValidateModel(model, new UpdateOfficeValidator(), cancellationToken);
 
             var oldOffice = await _officeRepository.GetItemAsync(id, cancellationToken);
 
@@ -50,7 +50,7 @@ namespace OfficesAPI.Services
                 throw new OfficeNotFoundException(id);
 
             if (oldOffice.Address.City != model.City || oldOffice.OfficeNumber != model.OfficeNumber)
-                await IsOfficeNumberValid(model.City, model.OfficeNumber);
+                await ValidateOfficeNumber(model.City, model.OfficeNumber);
 
             var office = _mapper.Map<Office>(model);
             office.Id = id;
@@ -103,13 +103,13 @@ namespace OfficesAPI.Services
             return office;
         }
 
-        private async Task IsBlobFileNameValid(IFormFile? file, CancellationToken cancellationToken = default)
+        private async Task ValidateBlobFileName(IFormFile? file, CancellationToken cancellationToken = default)
         {
             if (file != null && await _blobService.IsBlobExist(file.FileName, cancellationToken))
                 throw new BlobNameIsNotValidException(file.FileName);
         }
 
-        private async Task IsOfficeNumberValid(string city, int officeNumber, CancellationToken cancellationToken = default)
+        private async Task ValidateOfficeNumber(string city, int officeNumber, CancellationToken cancellationToken = default)
         {
             var isOfficeNumberInvalid = await _officeRepository.IsItemExistAsync(x => x.Address.City == city &&
                                                                                       x.OfficeNumber == officeNumber,
@@ -119,7 +119,7 @@ namespace OfficesAPI.Services
                 throw new CityAlreadyHaveOfficeWithThatNumberException(city, officeNumber);
         }
 
-        private async Task IsModelValid<Tmodel>(Tmodel model, IValidator<Tmodel> validator, CancellationToken cancellationToken = default)
+        private async Task ValidateModel<Tmodel>(Tmodel model, IValidator<Tmodel> validator, CancellationToken cancellationToken = default)
         {
             var validationResult = await validator.ValidateAsync(model, cancellationToken);
             if (!validationResult.IsValid)
