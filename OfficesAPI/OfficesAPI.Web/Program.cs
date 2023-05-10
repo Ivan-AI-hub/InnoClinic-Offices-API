@@ -1,10 +1,10 @@
-using AuthorizationAPI.Web.Middlewares;
 using FluentValidation;
 using OfficesAPI.DAL;
 using OfficesAPI.Services.Mappings;
 using OfficesAPI.Services.Settings;
 using OfficesAPI.Services.Validators;
 using OfficesAPI.Web.Extentions;
+using OfficesAPI.Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 

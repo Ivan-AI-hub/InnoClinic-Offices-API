@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using OfficesAPI.Domain;
-using OfficesAPI.Services.Models;
+using OfficesAPI.Services.Abstraction.Models;
 
 namespace OfficesAPI.Services.Mappings
 {

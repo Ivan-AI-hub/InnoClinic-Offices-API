@@ -2,7 +2,7 @@
 {
     public class Office
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
         public Picture? Photo { get; private set; }
         public OfficeAddress Address { get; private set; }
         public int OfficeNumber { get; private set; }
@@ -18,11 +18,6 @@
             PhoneNumber = phoneNumber;
             Status = status;
             Photo = photo;
-        }
-        public Office(Guid id, OfficeAddress address, int officeNumber, string phoneNumber, bool status, Picture? photo) :
-            this(address, officeNumber, phoneNumber, status, photo)
-        {
-            Id = id;
         }
     }
 }

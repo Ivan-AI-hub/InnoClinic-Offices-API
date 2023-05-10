@@ -1,8 +1,8 @@
 ﻿using OfficesAPI.Domain.Exceptions;
-using OfficesAPI.Web.Models.ErrorModels;
+using OfficesAPI.Presentation.Models.ErrorModels;
 using System.Net;
 
-namespace AuthorizationAPI.Web.Middlewares
+namespace OfficesAPI.Web.Middlewares
 {
     public class ExceptionMiddleware
     {

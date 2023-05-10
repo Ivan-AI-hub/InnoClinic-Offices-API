@@ -2,6 +2,7 @@
 using OfficesAPI.DAL.Repositories;
 using OfficesAPI.Domain.Interfaces;
 using OfficesAPI.Services;
+using OfficesAPI.Services.Abstraction;
 
 namespace OfficesAPI.Web.Extentions
 {
@@ -13,8 +14,8 @@ namespace OfficesAPI.Web.Extentions
         }
         public static void ConfigureServices(this IServiceCollection services)
         {
-            services.AddScoped<BlobService>();
-            services.AddScoped<OfficeService>();
+            services.AddScoped<IBlobService, BlobService>();
+            services.AddScoped<IOfficeService, OfficeService>();
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)

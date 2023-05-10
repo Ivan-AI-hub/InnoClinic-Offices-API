@@ -1,4 +1,4 @@
-﻿namespace OfficesAPI.Services.Models
+﻿namespace OfficesAPI.Services.Abstraction.Models
 {
     public class OfficeAddressDTO
     {

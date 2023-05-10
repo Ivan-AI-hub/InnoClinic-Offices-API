@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace OfficesAPI.Web.Models.ErrorModels
+namespace OfficesAPI.Presentation.Models.ErrorModels
 {
     public class ErrorDetails
     {

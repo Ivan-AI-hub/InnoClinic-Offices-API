@@ -4,28 +4,26 @@ using Microsoft.AspNetCore.Http;
 using OfficesAPI.Domain;
 using OfficesAPI.Domain.Exceptions;
 using OfficesAPI.Domain.Interfaces;
-using OfficesAPI.Services.Models;
+using OfficesAPI.Services.Abstraction;
+using OfficesAPI.Services.Abstraction.Models;
+using OfficesAPI.Services.Exceptions;
 using OfficesAPI.Services.Validators;
 
 namespace OfficesAPI.Services
 {
-    public class OfficeService
+    public class OfficeService : IOfficeService
     {
         private IMapper _mapper;
         private IOfficeRepository _officeRepository;
-        private BlobService _blobService;
+        private IBlobService _blobService;
 
-        public OfficeService(IMapper mapper, IOfficeRepository officeRepository, BlobService blobService)
+        public OfficeService(IMapper mapper, IOfficeRepository officeRepository, IBlobService blobService)
         {
             _mapper = mapper;
             _officeRepository = officeRepository;
             _blobService = blobService;
         }
 
-        /// <summary>
-        /// Creates the office in the system
-        /// </summary>
-        /// <param name="model">Model for creating office</param>
         public async Task<OfficeDTO> CreateAsync(CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
             await IsBlobFileNameValid(model.Photo, cancellationToken);
@@ -41,11 +39,6 @@ namespace OfficesAPI.Services
             return await GetOfficeDTOWithPhotoAsync(office);
         }
 
-        /// <summary>
-        /// Updates office with a specific id in database
-        /// </summary>
-        /// <param name="id">Office id</param>
-        /// <param name="model">Model for updating office</param>
         public async Task UpdateAsync(Guid id, UpdateOfficeModel model, CancellationToken cancellationToken = default)
         {
             await IsBlobFileNameValid(model.Photo, cancellationToken);
@@ -60,6 +53,7 @@ namespace OfficesAPI.Services
                 await IsOfficeNumberValid(model.City, model.OfficeNumber);
 
             var office = _mapper.Map<Office>(model);
+            office.Id = id;
             await _officeRepository.UpdateAsync(id, office);
 
             if (oldOffice.Photo != null && await _blobService.IsBlobExist(oldOffice.Photo.Name))
@@ -69,11 +63,6 @@ namespace OfficesAPI.Services
                 await _blobService.UploadAsync(model.Photo);
         }
 
-        /// <summary>
-        /// Updates status for office with a specific id
-        /// </summary>
-        /// <param name="id">Office id</param>
-        /// <param name="newStatus">new status</param>
         public async Task UpdateStatus(Guid id, bool newStatus, CancellationToken cancellationToken = default)
         {
             var office = await _officeRepository.GetItemAsync(id, cancellationToken);
@@ -88,9 +77,6 @@ namespace OfficesAPI.Services
             await _officeRepository.UpdateAsync(id, office);
         }
 
-        /// <param name="pageNumber">number of page</param>
-        /// <param name="pageSize">size of page</param>
-        /// <returns>Information about offices</returns>
         public IEnumerable<OfficeDTO> GetOfficesPage(int pageNumber, int pageSize)
         {
             var offices = _officeRepository.GetItems();
@@ -98,8 +84,6 @@ namespace OfficesAPI.Services
             return _mapper.Map<IEnumerable<OfficeDTO>>(offices);
         }
 
-        /// <param name="id">Office id</param>
-        /// <returns>info about an office with a specific id</returns>
         public async Task<OfficeDTO> GetOfficeAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var office = await _officeRepository.GetItemAsync(id, cancellationToken);

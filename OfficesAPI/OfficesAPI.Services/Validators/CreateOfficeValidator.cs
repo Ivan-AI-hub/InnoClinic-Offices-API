@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using OfficesAPI.Services.Models;
+using OfficesAPI.Services.Abstraction.Models;
 
 namespace OfficesAPI.Services.Validators
 {

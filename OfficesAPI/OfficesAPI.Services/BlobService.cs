@@ -1,12 +1,13 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using OfficesAPI.Services.Models;
+using OfficesAPI.Services.Abstraction;
+using OfficesAPI.Services.Abstraction.Models;
 using OfficesAPI.Services.Settings;
 
 namespace OfficesAPI.Services
 {
-    public class BlobService
+    public class BlobService : IBlobService
     {
         private BlobStorageSettings _blobStorageSettings;
         public BlobService(IOptions<BlobStorageSettings> blobStorageSettings)
@@ -17,9 +18,6 @@ namespace OfficesAPI.Services
                 container.CreateAsync();
         }
 
-        /// <summary>
-        /// Uploads a blob to an azure server
-        /// </summary>
         public async Task UploadAsync(IFormFile blob, CancellationToken cancellationToken = default)
         {
             BlobContainerClient container = new BlobContainerClient(_blobStorageSettings.ConnectionString, _blobStorageSettings.ImagesContainerName);
@@ -32,10 +30,6 @@ namespace OfficesAPI.Services
             }
         }
 
-        /// <summary>
-        /// Downloads a blob with a specific name from an azure server
-        /// </summary>
-        /// <returns>Blob object if exist, otherwise returns null</returns>
         public async Task<Blob?> DownloadAsync(string blobFileName, CancellationToken cancellationToken = default)
         {
             BlobContainerClient container = new BlobContainerClient(_blobStorageSettings.ConnectionString, _blobStorageSettings.ImagesContainerName);
@@ -53,9 +47,6 @@ namespace OfficesAPI.Services
             return new Blob(blobFileName, contentType, content.Value.Content.ToArray());
         }
 
-        /// <summary>
-        /// Deletes a blob object with a specific name from an azure server
-        /// </summary>
         public async Task DeleteAsync(string blobFileName, CancellationToken cancellationToken = default)
         {
             BlobContainerClient container = new BlobContainerClient(_blobStorageSettings.ConnectionString, _blobStorageSettings.ImagesContainerName);
@@ -63,7 +54,6 @@ namespace OfficesAPI.Services
             await container.DeleteBlobAsync(blobFileName, cancellationToken: cancellationToken);
         }
 
-        /// <returns>True if exist and False if not</returns>
         public async Task<bool> IsBlobExist(string blobFileName, CancellationToken cancellationToken = default)
         {
             BlobContainerClient container = new BlobContainerClient(_blobStorageSettings.ConnectionString, _blobStorageSettings.ImagesContainerName);

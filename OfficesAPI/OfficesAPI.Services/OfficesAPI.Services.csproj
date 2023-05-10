@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OfficesAPI.Domain\OfficesAPI.Domain.csproj" />
+    <ProjectReference Include="..\OfficesAPI.Services.Abstraction\OfficesAPI.Services.Abstraction.csproj" />
   </ItemGroup>
 
 </Project>

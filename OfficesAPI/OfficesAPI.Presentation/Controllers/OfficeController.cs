@@ -1,17 +1,17 @@
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using OfficesAPI.Services;
-using OfficesAPI.Services.Models;
-using OfficesAPI.Web.Models.ErrorModels;
+using OfficesAPI.Presentation.Models.ErrorModels;
+using OfficesAPI.Services.Abstraction;
+using OfficesAPI.Services.Abstraction.Models;
 
-namespace OfficesAPI.Web.Controllers
+namespace OfficesAPI.Presentation.Controllers
 {
     [ApiController]
     [Route("offices")]
     public class OfficeController : ControllerBase
     {
-        private OfficeService _officeService;
-        public OfficeController(OfficeService officeService)
+        private IOfficeService _officeService;
+        public OfficeController(IOfficeService officeService)
         {
             _officeService = officeService;
         }
@@ -66,7 +66,7 @@ namespace OfficesAPI.Web.Controllers
         public IActionResult GetOffices(int pageNumber = 1, int pageSize = 10)
         {
             var offices = _officeService.GetOfficesPage(pageNumber, pageSize);
-            return new JsonResult(offices);
+            return Ok(offices);
         }
 
         /// <param name="id">Office id</param>
@@ -77,7 +77,7 @@ namespace OfficesAPI.Web.Controllers
         public async Task<IActionResult> GetOffice(Guid id, CancellationToken cancellationToken = default)
         {
             var office = await _officeService.GetOfficeAsync(id, cancellationToken);
-            return new JsonResult(office);
+            return Ok(office);
         }
     }
 }
