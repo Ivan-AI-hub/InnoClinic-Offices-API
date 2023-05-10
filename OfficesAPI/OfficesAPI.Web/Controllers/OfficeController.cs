@@ -25,12 +25,8 @@ namespace OfficesAPI.Web.Controllers
         [ProducesResponseType(typeof(ErrorDetails),400)]
         public async Task<IActionResult> CreateOffice([FromForm]CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
-            var result = await _officeService.CreateAsync(model, cancellationToken);
-            if (!result.IsComplite)
-            {
-                return BadRequest(new ErrorDetails(400, result.Errors));
-            }
-            return Created(Request.GetDisplayUrl() + $"/{result.Value.Id}", result.Value);
+            var office = await _officeService.CreateAsync(model, cancellationToken);
+            return Created(Request.GetDisplayUrl() + $"/{office.Id}", office);
         }
 
 
@@ -44,11 +40,7 @@ namespace OfficesAPI.Web.Controllers
         [ProducesResponseType(typeof(ErrorDetails), 400)]
         public async Task<IActionResult> UpdateOffice(Guid id, [FromForm] UpdateOfficeModel model, CancellationToken cancellationToken = default)
         {
-            var result = await _officeService.UpdateAsync(id, model, cancellationToken);
-            if (!result.IsComplite)
-            {
-                return BadRequest(new ErrorDetails(400, result.Errors));
-            }
+            await _officeService.UpdateAsync(id, model, cancellationToken);
             return Accepted();
         }
 
@@ -62,11 +54,7 @@ namespace OfficesAPI.Web.Controllers
         [ProducesResponseType(typeof(ErrorDetails), 400)]
         public async Task<IActionResult> UpdateOfficeStatus(Guid id, bool newStatus, CancellationToken cancellationToken = default)
         {
-            var result = await _officeService.UpdateStatus(id, newStatus, cancellationToken);
-            if (!result.IsComplite)
-            {
-                return BadRequest(new ErrorDetails(400, result.Errors));
-            }
+            await _officeService.UpdateStatus(id, newStatus, cancellationToken);
             return Accepted();
         }
 
@@ -89,10 +77,6 @@ namespace OfficesAPI.Web.Controllers
         public async Task<IActionResult> GetOffice(Guid id, CancellationToken cancellationToken = default)
         {
             var office = await _officeService.GetOfficeAsync(id, cancellationToken);
-            if (office == null)
-            {
-                return BadRequest(new ErrorDetails(400, $"Office with ID = {id} does not exist"));
-            }
             return new JsonResult(office);
         }
     }

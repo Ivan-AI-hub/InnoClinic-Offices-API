@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using OfficesAPI.Application.Commands.Offices.Create;
 using OfficesAPI.Application.Commands.Offices.Update;
 using OfficesAPI.Application.Commands.Offices.UpdateStatus;
@@ -7,7 +8,7 @@ using OfficesAPI.Application.Queries.Offices.GetItem;
 using OfficesAPI.Application.Queries.Offices.GetPage;
 using OfficesAPI.Domain;
 using OfficesAPI.Services.Models;
-using OfficesAPI.Services.Results;
+
 
 namespace OfficesAPI.Services
 {
@@ -25,77 +26,59 @@ namespace OfficesAPI.Services
         }
 
         /// <summary>
-        /// Creates the office in the system
+        /// Creates the officeData in the system
         /// </summary>
-        /// <param name="model">Model for creating office</param>
-        public async Task<ServiceValueResult<OfficeDTO>> CreateAsync(CreateOfficeModel model, CancellationToken cancellationToken = default)
+        /// <param name="model">Model for creating officeData</param>
+        public async Task<OfficeDTO> CreateAsync(CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
-            if (model.Photo != null)
-            {
-                var blobFileResult = await IsBlobFileNameValid(model.Photo.FileName);
-                if (!blobFileResult.IsComplite)
-                    return new ServiceValueResult<OfficeDTO>(blobFileResult);
-            }
+            await IsBlobFileNameValid(model.Photo);
 
             var request = _mapper.Map<CreateOffice>(model);
 
-            var applicationResult = await _mediator.Send(request, cancellationToken);
-
-            if (!applicationResult.IsComplite)
-                return new ServiceValueResult<OfficeDTO>(applicationResult);
+            var officeData = await _mediator.Send(request, cancellationToken);
 
             if (model.Photo != null)
             {
                 await _blobService.UploadAsync(model.Photo, cancellationToken);
             }
 
-            var office = await GetOfficeDTOWithPhotoAsync(applicationResult.Value);
-            return new ServiceValueResult<OfficeDTO>(office);
+            var office = await GetOfficeDTOWithPhotoAsync(officeData);
+            return office;
         }
 
         /// <summary>
-        /// Updates office with a specific id in database
+        /// Updates officeData with a specific id in database
         /// </summary>
         /// <param name="id">Office id</param>
-        /// <param name="model">Model for updating office</param>
-        public async Task<ServiceVoidResult> UpdateAsync(Guid id, UpdateOfficeModel model, CancellationToken cancellationToken = default)
+        /// <param name="model">Model for updating officeData</param>
+        public async Task UpdateAsync(Guid id, UpdateOfficeModel model, CancellationToken cancellationToken = default)
         {
-            if (model.Photo != null)
-            {
-                var blobFileResult = await IsBlobFileNameValid(model.Photo.FileName);
-                if (!blobFileResult.IsComplite)
-                    return new ServiceVoidResult(blobFileResult);
-            }
+            await IsBlobFileNameValid(model.Photo);    
 
             var request = _mapper.Map<UpdateOffice>(model);
             request.Id = id;
 
-            var applicationResult = await _mediator.Send(request, cancellationToken);
-            if (!applicationResult.IsComplite)
-                return new ServiceVoidResult(applicationResult);
+            var oldOffice = await _mediator.Send(request, cancellationToken);
 
-            if (applicationResult.OldValue.Photo != null && await _blobService.IsBlobExist(applicationResult.OldValue.Photo.Name))
+            if (oldOffice.Photo != null && await _blobService.IsBlobExist(oldOffice.Photo.Name))
             {
-                await _blobService.DeleteAsync(applicationResult.OldValue.Photo.Name);
+                await _blobService.DeleteAsync(oldOffice.Photo.Name);
             }
 
             if (model.Photo != null)
             {
                 await _blobService.UploadAsync(model.Photo);
             }
-
-            return new ServiceVoidResult(applicationResult);
         }
 
         /// <summary>
-        /// Updates status for office with a specific id
+        /// Updates status for officeData with a specific id
         /// </summary>
         /// <param name="id">Office id</param>
         /// <param name="newStatus">new status</param>
-        public async Task<ServiceVoidResult> UpdateStatus(Guid id, bool newStatus, CancellationToken cancellationToken = default)
+        public async Task UpdateStatus(Guid id, bool newStatus, CancellationToken cancellationToken = default)
         {
-            var applicationResult = await _mediator.Send(new UpdateOfficeStatus(id, newStatus), cancellationToken);
-            return new ServiceVoidResult(applicationResult);
+             await _mediator.Send(new UpdateOfficeStatus(id, newStatus), cancellationToken);
         }
 
         /// <param name="pageNumber">number of page</param>
@@ -108,12 +91,10 @@ namespace OfficesAPI.Services
         }
 
         /// <param name="id">Office id</param>
-        /// <returns>info about an office with a specific id</returns>
-        public async Task<OfficeDTO?> GetOfficeAsync(Guid id, CancellationToken cancellationToken = default)
+        /// <returns>info about an officeData with a specific id</returns>
+        public async Task<OfficeDTO> GetOfficeAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var officeData = await _mediator.Send(new GetOffice(id), cancellationToken);
-            if (officeData == null)
-                return null;
             return await GetOfficeDTOWithPhotoAsync(officeData);
         }
 
@@ -129,13 +110,10 @@ namespace OfficesAPI.Services
             return office;
         }
 
-        private async Task<IServiceResult> IsBlobFileNameValid(string blobFileName)
+        private async Task IsBlobFileNameValid(IFormFile? file)
         {
-            if (await _blobService.IsBlobExist(blobFileName))
-            {
-                return new ServiceVoidResult(errors: "File with the same name already exist in database");
-            }
-            return new ServiceVoidResult();
+            if (file != null && await _blobService.IsBlobExist(file.FileName))
+                throw new BlobNameIsNotValidException(file.FileName);
         }
     }
 }

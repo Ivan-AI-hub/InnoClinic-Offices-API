@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Services", "Offi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Web", "OfficesAPI.Web\OfficesAPI.Web.csproj", "{990088F8-BD1D-4BA4-9339-4EE25B15A115}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{82E6E910-1CAC-4A5C-901C-5FDCD02E138D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{54CBC0A3-C83A-49E0-B8EC-5871077FA066}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D34B5218-3F1F-4E8F-816C-4C035AF072A7} = {82E6E910-1CAC-4A5C-901C-5FDCD02E138D}
+		{B00E9159-054A-42EF-A71F-21F7E123D878} = {54CBC0A3-C83A-49E0-B8EC-5871077FA066}
+		{BB1A89DD-5A1F-4963-BFA5-27C923BE4132} = {82E6E910-1CAC-4A5C-901C-5FDCD02E138D}
+		{51B18AD1-B009-4D1A-9D81-5F4E53239189} = {82E6E910-1CAC-4A5C-901C-5FDCD02E138D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF40A980-391A-4B45-88DF-87F0755F7364}

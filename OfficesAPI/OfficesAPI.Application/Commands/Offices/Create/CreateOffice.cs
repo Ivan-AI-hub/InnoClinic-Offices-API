@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using OfficesAPI.Application.Results;
+
 using OfficesAPI.Domain;
 
 namespace OfficesAPI.Application.Commands.Offices.Create
@@ -10,5 +10,5 @@ namespace OfficesAPI.Application.Commands.Offices.Create
                               int HouseNumber,
                               int OfficeNumber,
                               string PhoneNumber,
-                              bool Status) : IRequest<ApplicationValueResult<Office>>;
+                              bool Status) : IRequest<Office>;
 }

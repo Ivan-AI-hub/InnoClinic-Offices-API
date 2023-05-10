@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using OfficesAPI.Application.Results;
+
 using OfficesAPI.Domain;
 
 namespace OfficesAPI.Application.Commands.Offices.Update
@@ -10,7 +10,7 @@ namespace OfficesAPI.Application.Commands.Offices.Update
                               int HouseNumber,
                               int OfficeNumber,
                               string PhoneNumber,
-                              bool Status) : IRequest<ApplicationUpdateResult<Office>>
+                              bool Status) : IRequest<Office>
     {
         public Guid Id { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using OfficesAPI.Domain;
+using OfficesAPI.Domain.Exceptions;
 using OfficesAPI.Domain.Interfaces;
 
 namespace OfficesAPI.Application.Queries.Offices.GetItem
@@ -11,9 +12,12 @@ namespace OfficesAPI.Application.Queries.Offices.GetItem
         {
             _officeRepository = officeRepository;
         }
-        public Task<Office?> Handle(GetOffice request, CancellationToken cancellationToken)
+        public async Task<Office> Handle(GetOffice request, CancellationToken cancellationToken)
         {
-            return _officeRepository.GetItemAsync(request.Id, cancellationToken);
+            var office = await _officeRepository.GetItemAsync(request.Id, cancellationToken);
+            if (office == null)
+                throw new OfficeNotFoundException(request.Id);
+            return office;
         }
     }
 }

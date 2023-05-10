@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
-using OfficesAPI.Application.Results;
+
 using OfficesAPI.Domain;
+using OfficesAPI.Domain.Exceptions;
 using OfficesAPI.Domain.Interfaces;
 
 namespace OfficesAPI.Application.Commands.Offices.Create
 {
-    internal class CreateOfficeHandler : IRequestHandler<CreateOffice, ApplicationValueResult<Office>>
+    internal class CreateOfficeHandler : IRequestHandler<CreateOffice, Office>
     {
         private IOfficeRepository _officeRepository;
         private IValidator<CreateOffice> _validator;
@@ -19,16 +20,22 @@ namespace OfficesAPI.Application.Commands.Offices.Create
             _mapper = mapper;
         }
 
-        public async Task<ApplicationValueResult<Office>> Handle(CreateOffice request, CancellationToken cancellationToken)
+        public async Task<Office> Handle(CreateOffice request, CancellationToken cancellationToken)
         {
             var validationResult = await _validator.ValidateAsync(request, cancellationToken);
             if (!validationResult.IsValid)
-                return new ApplicationValueResult<Office>(validationResult);
+                throw new ValidationException(validationResult.Errors);
+
+            var isOfficeNumberInvalid = await _officeRepository.IsItemExistAsync(x => x.Address.City == request.City &&
+                                                                                 x.OfficeNumber == request.OfficeNumber);
+
+            if (isOfficeNumberInvalid)
+                throw new CityAlreadyHaveOfficeWithThatNumberException(request.City, request.OfficeNumber);
 
             var office = _mapper.Map<Office>(request);
 
             await _officeRepository.CreateAsync(office);
-            return new ApplicationValueResult<Office>(office);
+            return office;
         }
     }
 }
