@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
-using OfficesAPI.DAL.Repositories;
 using OfficesAPI.Domain.Interfaces;
+using OfficesAPI.Persistence.Repositories;
 using OfficesAPI.Services;
 using OfficesAPI.Services.Abstraction;
 

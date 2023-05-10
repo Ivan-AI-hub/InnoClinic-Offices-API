@@ -1,5 +1,5 @@
 using FluentValidation;
-using OfficesAPI.DAL;
+using OfficesAPI.Persistence;
 using OfficesAPI.Services.Mappings;
 using OfficesAPI.Services.Settings;
 using OfficesAPI.Services.Validators;

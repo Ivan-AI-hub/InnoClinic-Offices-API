@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Domain", "OfficesAPI.Domain\OfficesAPI.Domain.csproj", "{D34B5218-3F1F-4E8F-816C-4C035AF072A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.DAL", "OfficesAPI.DAL\OfficesAPI.DAL.csproj", "{B00E9159-054A-42EF-A71F-21F7E123D878}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Persistence", "OfficesAPI.Persistence\OfficesAPI.Persistence.csproj", "{B00E9159-054A-42EF-A71F-21F7E123D878}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Services", "OfficesAPI.Services\OfficesAPI.Services.csproj", "{51B18AD1-B009-4D1A-9D81-5F4E53239189}"
 EndProject

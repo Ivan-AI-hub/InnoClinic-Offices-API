@@ -5,7 +5,7 @@ using OfficesAPI.Domain;
 using OfficesAPI.Domain.Interfaces;
 using System.Linq.Expressions;
 
-namespace OfficesAPI.DAL.Repositories
+namespace OfficesAPI.Persistence.Repositories
 {
     public class OfficeRepository : IOfficeRepository
     {

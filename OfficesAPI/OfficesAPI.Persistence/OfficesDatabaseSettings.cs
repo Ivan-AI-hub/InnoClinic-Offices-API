@@ -1,4 +1,4 @@
-﻿namespace OfficesAPI.DAL
+﻿namespace OfficesAPI.Persistence
 {
     public class OfficesDatabaseSettings
     {
