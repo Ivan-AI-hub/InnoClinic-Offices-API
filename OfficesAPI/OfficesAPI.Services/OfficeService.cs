@@ -16,18 +16,23 @@ namespace OfficesAPI.Services
         private IMapper _mapper;
         private IOfficeRepository _officeRepository;
         private IBlobService _blobService;
+        private IValidator<CreateOfficeModel> _createOfficeValidator;
+        private IValidator<UpdateOfficeModel> _updateOfficeValidator;
 
-        public OfficeService(IMapper mapper, IOfficeRepository officeRepository, IBlobService blobService)
+        public OfficeService(IMapper mapper, IOfficeRepository officeRepository, IBlobService blobService,
+            IValidator<CreateOfficeModel> createOfficeValidator, IValidator<UpdateOfficeModel> updateOfficeValidator)
         {
             _mapper = mapper;
             _officeRepository = officeRepository;
             _blobService = blobService;
+            _createOfficeValidator = createOfficeValidator;
+            _updateOfficeValidator = updateOfficeValidator;
         }
 
         public async Task<OfficeDTO> CreateAsync(CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
             await ValidateBlobFileName(model.Photo, cancellationToken);
-            await ValidateModel(model, new CreateOfficeValidator(), cancellationToken);
+            await ValidateModel(model, _createOfficeValidator, cancellationToken);
             await ValidateOfficeNumber(model.City, model.OfficeNumber, cancellationToken);
 
             var office = _mapper.Map<Office>(model);
@@ -42,7 +47,7 @@ namespace OfficesAPI.Services
         public async Task UpdateAsync(Guid id, UpdateOfficeModel model, CancellationToken cancellationToken = default)
         {
             await ValidateBlobFileName(model.Photo, cancellationToken);
-            await ValidateModel(model, new UpdateOfficeValidator(), cancellationToken);
+            await ValidateModel(model, _updateOfficeValidator, cancellationToken);
 
             var oldOffice = await _officeRepository.GetItemAsync(id, cancellationToken);
 
