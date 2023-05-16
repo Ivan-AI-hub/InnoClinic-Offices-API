@@ -17,7 +17,7 @@ namespace OfficesAPI.Services.Abstraction
         /// <param name="pageNumber">number of page</param>
         /// <param name="pageSize">size of page</param>
         /// <returns>Information about offices</returns>
-        IEnumerable<OfficeDTO> GetOfficesPage(int pageNumber, int pageSize);
+        IEnumerable<OfficeDTO> GetOffices(int pageNumber, int pageSize);
 
         /// <summary>
         /// Updates office with a specific id in database

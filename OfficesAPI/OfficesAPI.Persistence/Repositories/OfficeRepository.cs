@@ -9,7 +9,7 @@ namespace OfficesAPI.Persistence.Repositories
 {
     public class OfficeRepository : IOfficeRepository
     {
-        private IMongoCollection<Office> _officeCollection;
+        private readonly IMongoCollection<Office> _officeCollection;
         public OfficeRepository(IOptions<OfficesDatabaseSettings> databaseSettings)
         {
             var settings = databaseSettings.Value;

@@ -9,13 +9,15 @@ namespace OfficesAPI.Services
 {
     public class BlobService : IBlobService
     {
-        private BlobStorageSettings _blobStorageSettings;
+        private readonly BlobStorageSettings _blobStorageSettings;
         public BlobService(IOptions<BlobStorageSettings> blobStorageSettings)
         {
             _blobStorageSettings = blobStorageSettings.Value;
             BlobContainerClient container = new BlobContainerClient(_blobStorageSettings.ConnectionString, _blobStorageSettings.ImagesContainerName);
             if (!container.Exists().Value)
+            {
                 container.CreateAsync();
+            }
         }
 
         public async Task UploadAsync(IFormFile blob, CancellationToken cancellationToken = default)

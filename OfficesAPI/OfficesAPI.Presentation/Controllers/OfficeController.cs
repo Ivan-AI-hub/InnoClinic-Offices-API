@@ -10,7 +10,7 @@ namespace OfficesAPI.Presentation.Controllers
     [Route("offices")]
     public class OfficeController : ControllerBase
     {
-        private IOfficeService _officeService;
+        private readonly IOfficeService _officeService;
         public OfficeController(IOfficeService officeService)
         {
             _officeService = officeService;
@@ -65,7 +65,7 @@ namespace OfficesAPI.Presentation.Controllers
         [ProducesResponseType(typeof(IEnumerable<OfficeDTO>), 200)]
         public IActionResult GetOffices(int pageNumber = 1, int pageSize = 10)
         {
-            var offices = _officeService.GetOfficesPage(pageNumber, pageSize);
+            var offices = _officeService.GetOffices(pageNumber, pageSize);
             return Ok(offices);
         }
 
