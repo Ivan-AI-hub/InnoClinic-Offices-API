@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using OfficesAPI.Application.Abstraction.Models;
 using OfficesAPI.Domain;
-using OfficesAPI.Services.Abstraction.Models;
 
-namespace OfficesAPI.Services.Mappings
+namespace OfficesAPI.Application.Mappings
 {
     public class ServicesMappingProfile : Profile
     {

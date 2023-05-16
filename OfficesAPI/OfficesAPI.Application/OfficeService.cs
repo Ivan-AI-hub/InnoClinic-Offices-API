@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using OfficesAPI.Application.Abstraction;
+using OfficesAPI.Application.Abstraction.Models;
 using OfficesAPI.Domain;
 using OfficesAPI.Domain.Exceptions;
 using OfficesAPI.Domain.Interfaces;
-using OfficesAPI.Services.Abstraction;
-using OfficesAPI.Services.Abstraction.Models;
-using OfficesAPI.Services.Exceptions;
+using OfficesAPI.Application.Exceptions;
 
-namespace OfficesAPI.Services
+namespace OfficesAPI.Application
 {
     public class OfficeService : IOfficeService
     {

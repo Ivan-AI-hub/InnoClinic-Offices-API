@@ -1,8 +1,8 @@
 ﻿using Microsoft.OpenApi.Models;
+using OfficesAPI.Application;
+using OfficesAPI.Application.Abstraction;
 using OfficesAPI.Domain.Interfaces;
 using OfficesAPI.Persistence.Repositories;
-using OfficesAPI.Services;
-using OfficesAPI.Services.Abstraction;
 
 namespace OfficesAPI.Web.Extentions
 {

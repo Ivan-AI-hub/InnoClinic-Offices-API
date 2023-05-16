@@ -1,8 +1,8 @@
 using FluentValidation;
+using OfficesAPI.Application.Mappings;
+using OfficesAPI.Application.Settings;
+using OfficesAPI.Application.Validators;
 using OfficesAPI.Persistence;
-using OfficesAPI.Services.Mappings;
-using OfficesAPI.Services.Settings;
-using OfficesAPI.Services.Validators;
 using OfficesAPI.Web.Extentions;
 using OfficesAPI.Web.Middlewares;
 

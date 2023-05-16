@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using OfficesAPI.Services.Abstraction.Models;
+using OfficesAPI.Application.Abstraction.Models;
 
-namespace OfficesAPI.Services.Abstraction
+namespace OfficesAPI.Application.Abstraction
 {
     public interface IBlobService
     {

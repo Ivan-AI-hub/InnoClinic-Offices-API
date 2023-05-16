@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Domain", "Office
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Persistence", "OfficesAPI.Persistence\OfficesAPI.Persistence.csproj", "{B00E9159-054A-42EF-A71F-21F7E123D878}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Services", "OfficesAPI.Services\OfficesAPI.Services.csproj", "{51B18AD1-B009-4D1A-9D81-5F4E53239189}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Application", "OfficesAPI.Application\OfficesAPI.Application.csproj", "{51B18AD1-B009-4D1A-9D81-5F4E53239189}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Web", "OfficesAPI.Web\OfficesAPI.Web.csproj", "{990088F8-BD1D-4BA4-9339-4EE25B15A115}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -19,9 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{82E6E910-1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{54CBC0A3-C83A-49E0-B8EC-5871077FA066}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficesAPI.Services.Abstraction", "OfficesAPI.Services.Abstraction\OfficesAPI.Services.Abstraction.csproj", "{245021EF-7BD2-41D3-8F37-53BAF779C295}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Application.Abstraction", "OfficesAPI.Application.Abstraction\OfficesAPI.Application.Abstraction.csproj", "{245021EF-7BD2-41D3-8F37-53BAF779C295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficesAPI.Presentation", "OfficesAPI.Presentation\OfficesAPI.Presentation.csproj", "{95356621-71BB-4650-B492-7B9410F8551C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfficesAPI.Presentation", "OfficesAPI.Presentation\OfficesAPI.Presentation.csproj", "{95356621-71BB-4650-B492-7B9410F8551C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

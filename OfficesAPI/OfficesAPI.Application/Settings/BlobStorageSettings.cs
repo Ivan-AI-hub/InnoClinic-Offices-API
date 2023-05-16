@@ -1,4 +1,4 @@
-﻿namespace OfficesAPI.Services.Settings
+﻿namespace OfficesAPI.Application.Settings
 {
     public class BlobStorageSettings
     {

@@ -1,11 +1,11 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using OfficesAPI.Services.Abstraction;
-using OfficesAPI.Services.Abstraction.Models;
-using OfficesAPI.Services.Settings;
+using OfficesAPI.Application.Abstraction;
+using OfficesAPI.Application.Abstraction.Models;
+using OfficesAPI.Application.Settings;
 
-namespace OfficesAPI.Services
+namespace OfficesAPI.Application
 {
     public class BlobService : IBlobService
     {

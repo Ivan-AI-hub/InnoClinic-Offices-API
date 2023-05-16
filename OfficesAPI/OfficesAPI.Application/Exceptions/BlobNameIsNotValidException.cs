@@ -1,6 +1,6 @@
 ﻿using OfficesAPI.Domain.Exceptions;
 
-namespace OfficesAPI.Services.Exceptions
+namespace OfficesAPI.Application.Exceptions
 {
     public class BlobNameIsNotValidException : BadRequestException
     {

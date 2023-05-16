@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OfficesAPI.Services.Abstraction\OfficesAPI.Services.Abstraction.csproj" />
+    <ProjectReference Include="..\OfficesAPI.Application.Abstraction\OfficesAPI.Application.Abstraction.csproj" />
   </ItemGroup>
 
 </Project>

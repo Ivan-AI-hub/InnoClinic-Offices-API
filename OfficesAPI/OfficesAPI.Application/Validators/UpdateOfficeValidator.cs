@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
-using OfficesAPI.Services.Abstraction.Models;
+using OfficesAPI.Application.Abstraction.Models;
 
-namespace OfficesAPI.Services.Validators
+namespace OfficesAPI.Application.Validators
 {
-    public class CreateOfficeValidator : AbstractValidator<CreateOfficeModel>
+    public class UpdateOfficeValidator : AbstractValidator<UpdateOfficeModel>
     {
         private const string _phoneRegex = "^(\\+)?((\\d{2,3}) ?\\d|\\d)(([ -]?\\d)|( ?(\\d{2,3}) ?)){5,12}\\d$";
-        public CreateOfficeValidator()
+        public UpdateOfficeValidator()
         {
             RuleFor(x => x.City).NotEmpty().NotNull();
             RuleFor(x => x.Street).NotEmpty().NotNull();
