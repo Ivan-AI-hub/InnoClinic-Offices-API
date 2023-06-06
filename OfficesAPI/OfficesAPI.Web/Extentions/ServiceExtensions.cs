@@ -14,7 +14,6 @@ namespace OfficesAPI.Web.Extentions
         }
         public static void ConfigureServices(this IServiceCollection services)
         {
-            services.AddScoped<IBlobService, BlobService>();
             services.AddScoped<IOfficeService, OfficeService>();
         }
 

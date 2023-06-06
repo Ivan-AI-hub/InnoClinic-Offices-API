@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace OfficesAPI.Application.Abstraction.Models
+﻿namespace OfficesAPI.Application.Abstraction.Models
 {
-    public record CreateOfficeModel(IFormFile? Photo,
+    public record CreateOfficeModel(PictureDTO? Photo,
                                     string City,
                                     string Street,
                                     int HouseNumber,

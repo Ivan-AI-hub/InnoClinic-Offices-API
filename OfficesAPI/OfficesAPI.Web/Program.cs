@@ -1,6 +1,5 @@
 using FluentValidation;
 using OfficesAPI.Application.Mappings;
-using OfficesAPI.Application.Settings;
 using OfficesAPI.Application.Validators;
 using OfficesAPI.Persistence;
 using OfficesAPI.Web.Extentions;
@@ -17,7 +16,6 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateOfficeValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(typeof(ServicesMappingProfile));
-builder.Services.Configure<BlobStorageSettings>(builder.Configuration.GetSection("BlobStorageConfig"));
 builder.Services.Configure<OfficesDatabaseSettings>(builder.Configuration.GetSection("OfficesDatabaseConfig"));
 var app = builder.Build();
 
