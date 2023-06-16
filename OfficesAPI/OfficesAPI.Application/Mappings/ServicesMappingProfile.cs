@@ -8,19 +8,16 @@ namespace OfficesAPI.Application.Mappings
     {
         public ServicesMappingProfile()
         {
-            CreateMap<Office, OfficeDTO>()
-                .ForMember(s => s.Photo, r => r.Ignore())
-                .ReverseMap();
+            CreateMap<Office, OfficeDTO>().ReverseMap();
+            CreateMap<Picture, PictureDTO>().ReverseMap();
 
             CreateMap<OfficeAddress, OfficeAddressDTO>().ReverseMap();
 
             CreateMap<CreateOfficeModel, Office>()
-            .ForMember(o => o.Address, r => r.MapFrom(x => new OfficeAddress(x.City, x.Street, x.HouseNumber)))
-            .ForMember(s => s.Photo, r => r.MapFrom(x => x.Photo.FileName != null ? new Picture(x.Photo.FileName) : null));
+            .ForMember(o => o.Address, r => r.MapFrom(x => new OfficeAddress(x.City, x.Street, x.HouseNumber)));
 
             CreateMap<UpdateOfficeModel, Office>()
-            .ForMember(o => o.Address, r => r.MapFrom(x => new OfficeAddress(x.City, x.Street, x.HouseNumber)))
-            .ForMember(s => s.Photo, r => r.MapFrom(x => x.Photo.FileName != null ? new Picture(x.Photo.FileName) : null));
+            .ForMember(o => o.Address, r => r.MapFrom(x => new OfficeAddress(x.City, x.Street, x.HouseNumber)));
         }
     }
 }

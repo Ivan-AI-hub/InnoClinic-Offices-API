@@ -24,7 +24,7 @@ namespace OfficesAPI.Presentation.Controllers
         [ProducesResponseType(typeof(OfficeDTO), 201)]
         [ProducesResponseType(typeof(ErrorDetails), 400)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
-        public async Task<IActionResult> CreateOffice([FromForm] CreateOfficeModel model, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> CreateOffice(CreateOfficeModel model, CancellationToken cancellationToken = default)
         {
             var office = await _officeService.CreateAsync(model, cancellationToken);
             return Created(Request.GetDisplayUrl() + $"/{office.Id}", office);
@@ -40,7 +40,7 @@ namespace OfficesAPI.Presentation.Controllers
         [ProducesResponseType(202)]
         [ProducesResponseType(typeof(ErrorDetails), 400)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
-        public async Task<IActionResult> UpdateOffice(Guid id, [FromForm] UpdateOfficeModel model, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateOffice(Guid id, UpdateOfficeModel model, CancellationToken cancellationToken = default)
         {
             await _officeService.UpdateAsync(id, model, cancellationToken);
             return Accepted();
@@ -64,7 +64,7 @@ namespace OfficesAPI.Presentation.Controllers
         /// <param name="pageNumber">number of page</param>
         /// <param name="pageSize">size of page</param>
         /// <returns>Information about offices</returns>
-        [HttpGet]
+        [HttpGet("{pageSize}/{pageNumber}")]
         [ProducesResponseType(typeof(IEnumerable<OfficeDTO>), 200)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
         public IActionResult GetOffices(int pageNumber = 1, int pageSize = 10)
