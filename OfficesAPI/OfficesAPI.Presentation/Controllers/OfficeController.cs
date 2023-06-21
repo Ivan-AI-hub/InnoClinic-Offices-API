@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OfficesAPI.Application.Abstraction;
 using OfficesAPI.Application.Abstraction.Models;
 using OfficesAPI.Presentation.Models.ErrorModels;
+using OfficesAPI.Presentation.Models.RequestModels;
 
 namespace OfficesAPI.Presentation.Controllers
 {
@@ -40,7 +41,7 @@ namespace OfficesAPI.Presentation.Controllers
         [ProducesResponseType(202)]
         [ProducesResponseType(typeof(ErrorDetails), 400)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
-        public async Task<IActionResult> UpdateOffice(Guid id, UpdateOfficeModel model, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateOffice(Guid id, [FromBody]UpdateOfficeModel model, CancellationToken cancellationToken = default)
         {
             await _officeService.UpdateAsync(id, model, cancellationToken);
             return Accepted();
@@ -50,14 +51,14 @@ namespace OfficesAPI.Presentation.Controllers
         /// Updates status for office with a specific id
         /// </summary>
         /// <param name="id">Office id</param>
-        /// <param name="newStatus">new status</param>
+        /// <param name="status">new status</param>
         [HttpPut("{id}/status")]
         [ProducesResponseType(202)]
         [ProducesResponseType(typeof(ErrorDetails), 400)]
         [ProducesResponseType(typeof(ErrorDetails), 500)]
-        public async Task<IActionResult> UpdateOfficeStatus(Guid id, bool newStatus, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateOfficeStatus(Guid id, [FromBody] UpdateOfficeStatusRequestModel model, CancellationToken cancellationToken = default)
         {
-            await _officeService.UpdateStatus(id, newStatus, cancellationToken);
+            await _officeService.UpdateStatus(id, model.Status, cancellationToken);
             return Accepted();
         }
 
