@@ -6,6 +6,7 @@ using OfficesAPI.Web.Extentions;
 using OfficesAPI.Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.ConfigureLogger(builder.Configuration, builder.Environment, "ElasticConfiguration:Uri");
 
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServices();
