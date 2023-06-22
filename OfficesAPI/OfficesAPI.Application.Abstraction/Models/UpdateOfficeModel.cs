@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace OfficesAPI.Application.Abstraction.Models
+﻿namespace OfficesAPI.Application.Abstraction.Models
 {
-    public record UpdateOfficeModel(IFormFile? Photo,
+    public record UpdateOfficeModel(PictureDTO? Photo,
                                     string City,
                                     string Street,
                                     int HouseNumber,
