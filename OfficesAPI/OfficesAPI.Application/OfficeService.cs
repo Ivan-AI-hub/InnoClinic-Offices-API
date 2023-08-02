@@ -86,6 +86,7 @@ namespace OfficesAPI.Application
             var officeDTO = await _cache.GetAsync<OfficeDTO>(id.ToString(), cancellationToken);
             if (officeDTO != null)
             {
+                await _cache.RefreshAsync(id.ToString(), cancellationToken);
                 return officeDTO;
             }
 
