@@ -3,6 +3,7 @@ using OfficesAPI.Application;
 using OfficesAPI.Application.Abstraction;
 using OfficesAPI.Domain.Interfaces;
 using OfficesAPI.Persistence.Repositories;
+using OfficesAPI.Web.Settings;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using System.Reflection;
@@ -35,6 +36,13 @@ namespace OfficesAPI.Web.Extentions
                     })
                     .Enrich.WithProperty("Environment", environment.EnvironmentName)
                     .ReadFrom.Configuration(configuration);
+            });
+        }
+        public static void ConfigureCaching(this IServiceCollection services, RedisSettings settings)
+        {
+            services.AddStackExchangeRedisCache(options => {
+                options.Configuration = settings.Configuration;
+                options.InstanceName = settings.InstanceName;
             });
         }
         public static void ConfigureSwagger(this IServiceCollection services)

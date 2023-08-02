@@ -4,10 +4,12 @@ using OfficesAPI.Application.Validators;
 using OfficesAPI.Persistence;
 using OfficesAPI.Web.Extentions;
 using OfficesAPI.Web.Middlewares;
+using OfficesAPI.Web.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureLogger(builder.Configuration, builder.Environment, "ElasticConfiguration:Uri");
 
+builder.Services.ConfigureCaching(builder.Configuration.GetSection("RedisConfiguration").Get<RedisSettings>()!);
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServices();
 builder.Services.ConfigureSwagger();
